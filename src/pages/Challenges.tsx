@@ -109,7 +109,7 @@ export default function Challenges() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl p-8 text-white">
+      <div className="bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl p-8 text-white transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-2xl hover:shadow-orange-500/30">
         <div className="flex items-center space-x-4 mb-6">
           <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
             <Trophy className="h-8 w-8" />
@@ -122,7 +122,7 @@ export default function Challenges() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-6 text-white transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/30">
           <div className="flex items-center justify-between mb-2">
             <span className="text-amber-100">VoucherCoins</span>
             <Star className="h-5 w-5 text-amber-100 fill-current" />
@@ -130,7 +130,7 @@ export default function Challenges() {
           <div className="text-4xl font-bold mb-1">{totalCoins}</div>
           <div className="text-amber-100 text-sm">+{coinsThisWeek} this week</div>
         </div>
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/30">
           <div className="flex items-center justify-between mb-2">
             <span className="text-blue-100">Active Challenges</span>
             <Target className="h-5 w-5 text-blue-100" />
@@ -138,7 +138,7 @@ export default function Challenges() {
           <div className="text-4xl font-bold mb-1">{activeChallenges.length}</div>
           <div className="text-blue-100 text-sm">Keep going!</div>
         </div>
-        <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-6 text-white transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/30">
           <div className="flex items-center justify-between mb-2">
             <span className="text-emerald-100">Completed</span>
             <Trophy className="h-5 w-5 text-emerald-100" />
@@ -159,11 +159,11 @@ export default function Challenges() {
             return (
               <div
                 key={challenge.id}
-                className="bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200 p-6 hover:shadow-xl transition-all"
+                className="bg-gradient-to-br from-white via-yellow-50 to-amber-100 backdrop-blur-sm rounded-xl border border-amber-200 p-6 transition-all duration-300 group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-400/30 hover:border-yellow-400 hover:bg-yellow-50"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-4 flex-1">
-                    <div className={`w-14 h-14 bg-gradient-to-r ${colorClass} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                    <div className={`w-14 h-14 bg-gradient-to-r ${colorClass} rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 group-hover:shadow-lg group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-orange-400`}>
                       <Icon className="h-7 w-7 text-white" />
                     </div>
                     <div className="flex-1">
@@ -192,7 +192,7 @@ export default function Challenges() {
                     </div>
                   </div>
                   <div className="ml-4">
-                    <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center space-x-1">
+                    <div className="bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center space-x-1 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-pink-400">
                       <Gift className="h-4 w-4" />
                       <span>{challenge.reward}</span>
                     </div>
@@ -214,11 +214,11 @@ export default function Challenges() {
             return (
               <div
                 key={challenge.id}
-                className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-6"
+                className="bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-200 border-2 border-emerald-200 rounded-xl p-6 transition-all duration-300 group hover:scale-105 hover:-translate-y-2 hover:shadow-lg hover:shadow-emerald-500/20 hover:bg-emerald-100"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-4 flex-1">
-                    <div className={`w-14 h-14 bg-gradient-to-r ${colorClass} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                    <div className={`w-14 h-14 bg-gradient-to-r ${colorClass} rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-8 group-hover:shadow-lg group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-blue-400`}>
                       <Icon className="h-7 w-7 text-white" />
                     </div>
                     <div className="flex-1">
@@ -233,7 +233,7 @@ export default function Challenges() {
                     </div>
                   </div>
                   <div className="ml-4">
-                    <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center space-x-1">
+                    <div className="bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center space-x-1 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-pink-400">
                       <Gift className="h-4 w-4" />
                       <span>+{challenge.reward}</span>
                     </div>
@@ -245,7 +245,7 @@ export default function Challenges() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl p-8 text-white">
+      <div className="bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl p-8 text-white transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-2xl hover:shadow-purple-500/30">
         <div className="flex items-start space-x-4">
           <Trophy className="h-12 w-12 flex-shrink-0" />
           <div>

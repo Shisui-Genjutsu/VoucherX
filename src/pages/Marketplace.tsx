@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Search, Filter, Tag, Star, Calendar, Eye, ShoppingCart } from 'lucide-react';
+import { Search, Filter, Tag, Star, Calendar, Eye, ShoppingCart, Plus } from 'lucide-react';
 import { Voucher } from '../types';
+import AddVoucherModal from '../components/AddVoucherModal';
 
 interface MarketplaceProps {
   onNavigate: (page: string) => void;
@@ -147,12 +148,13 @@ export default function Marketplace({ onNavigate }: MarketplaceProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
   const [showFilters, setShowFilters] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const categories = ['all', 'food', 'fashion', 'travel', 'entertainment', 'tech', 'health'];
 
   const filteredVouchers = allVouchers.filter(voucher => {
     const matchesSearch = voucher.brand_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         voucher.description?.toLowerCase().includes(searchTerm.toLowerCase());
+      voucher.description?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || voucher.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });

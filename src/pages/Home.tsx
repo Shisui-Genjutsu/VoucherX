@@ -198,7 +198,8 @@ export default function Home({ onNavigate, onOpenAI }: HomeProps) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredVouchers.map((voucher) => {
             const daysLeft = getDaysUntilExpiry(voucher.expiry_date);
-            const isExpiringSoon = daysLeft <= 30;
+            const isExpired = daysLeft < 0;
+            const isExpiringSoon = daysLeft <= 30 && daysLeft >= 0;
 
             return (
               <div
@@ -232,11 +233,15 @@ export default function Home({ onNavigate, onOpenAI }: HomeProps) {
                     </div>
                   )}
 
-                  {isExpiringSoon && (
-                    <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold animate-pulse">
-                      {daysLeft} days left
-                    </div>
-                  )}
+                  {isExpired ? (
+  <div className="absolute top-4 left-4 bg-gray-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+    Expired
+  </div>
+) : isExpiringSoon ? (
+  <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+    {daysLeft}d left
+  </div>
+) : null}
                 </div>
 
                 <div className="p-6">

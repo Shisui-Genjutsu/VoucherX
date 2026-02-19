@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import { Search, Filter, Tag, Star, Calendar, Eye, ShoppingCart, Plus } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Search, Filter, Tag, Star, Calendar, Eye, ShoppingCart, Plus, AlertCircle } from 'lucide-react';
 import { Voucher } from '../types';
 import AddVoucherModal from '../components/AddVoucherModal';
+import { hasInvalidSupabaseConfig, supabase } from '../lib/supabase';
+import { useCategories } from '../hooks/useCategories';
 
 interface MarketplaceProps {
   onNavigate: (page: string) => void;
@@ -143,23 +145,12 @@ const fallbackVouchers: Voucher[] = [
   },
 ];
 
-export default function Marketplace({ onNavigate }: MarketplaceProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [sortBy, setSortBy] = useState('newest');
-  const [showFilters, setShowFilters] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
+function sanitizeSearchTerm(term: string): string {
+  return term.trim().replace(/[%_\\]/g, '\\$&');
+}
 
-  const categories = ['all', 'food', 'fashion', 'travel', 'entertainment', 'tech', 'health'];
-
-  const filteredVouchers = allVouchers.filter(voucher => {
-    const matchesSearch = voucher.brand_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      voucher.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || voucher.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const sortedVouchers = [...filteredVouchers].sort((a, b) => {
+function sortVouchers(vouchers: Voucher[], sortBy: SortOption): Voucher[] {
+  return [...vouchers].sort((a, b) => {
     switch (sortBy) {
       case 'discount':
         return b.discount_percentage - a.discount_percentage;
@@ -175,7 +166,7 @@ export default function Marketplace({ onNavigate }: MarketplaceProps) {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     }
   });
-};
+}
 
 export default function Marketplace({ onNavigate }: MarketplaceProps) {
   const { categories } = useCategories();
@@ -185,6 +176,7 @@ export default function Marketplace({ onNavigate }: MarketplaceProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState<SortOption>('newest');
   const [showFilters, setShowFilters] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -428,14 +420,14 @@ export default function Marketplace({ onNavigate }: MarketplaceProps) {
                   )}
 
                   {isExpired ? (
-                  <div className="absolute top-4 left-4 bg-gray-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                    Expired
-                  </div>
-                ) : isExpiringSoon ? (
-                  <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                    {daysLeft}d left
-                  </div>
-                ) : null}
+                    <div className="absolute top-4 left-4 bg-gray-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      Expired
+                    </div>
+                  ) : isExpiringSoon ? (
+                    <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      {daysLeft}d left
+                    </div>
+                  ) : null}
 
                   <div className="absolute bottom-4 left-4 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-slate-700">
                     {voucher.category}
